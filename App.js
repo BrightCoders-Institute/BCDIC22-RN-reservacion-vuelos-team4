@@ -1,13 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import React, { Component } from 'react';
-import Login from './src/views/Login';
-import Inputs from './src/components/Inputs';
+import SignUp from './src/views/SignUp';
 import Constants from 'expo-constants';
 
 export default function App() {
 	return (
 		<View style={styles.container}>
-			<Login />
+			<SignUp />
 		</View>
 	);
 }
