@@ -3,7 +3,7 @@ import { TextInput, Text, View, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styleComponents } from '../theme/StyleSignUp';
 
-export class InputPass extends Component {
+export default class InputPass extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -28,5 +28,3 @@ export class InputPass extends Component {
 		);
 	}
 }
-
-export default InputPass;

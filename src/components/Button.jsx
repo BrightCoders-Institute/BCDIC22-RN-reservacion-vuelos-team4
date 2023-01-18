@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, Image } from 'react-native';
 import { styleButton } from '../theme/StyleButton';
 
-export class ButtonTouch extends Component {
+export default class ButtonTouch extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -19,5 +19,3 @@ export class ButtonTouch extends Component {
 		);
 	}
 }
-
-export default ButtonTouch;

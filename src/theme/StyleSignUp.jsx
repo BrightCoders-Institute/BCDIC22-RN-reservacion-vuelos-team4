@@ -17,12 +17,13 @@ export const styleComponents = StyleSheet.create({
 		textAlign: 'justify',
 		fontSize: 12,
 		color: COLORS.GRAY,
-		marginTop: 290,
+		marginTop: 345,
 	},
 	StyleHeader: {
 		fontSize: 30,
 		color: COLORS.BLUE,
 		fontWeight: '700',
+		marginBottom: 20,
 	},
 	StyleIcon: {
 		position: 'absolute',
