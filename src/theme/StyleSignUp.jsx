@@ -10,7 +10,7 @@ export const signUpStyles = StyleSheet.create({
 
 export const styleComponents = StyleSheet.create({
   containerInput: {
-    marginTop: 50,
+    marginTop: 10,
   },
   StyleDescText: {
     position: "absolute",
@@ -57,4 +57,26 @@ export const styleComponents = StyleSheet.create({
     marginBottom: 5,
     fontWeight: "300",
   },
+});
+
+export const StyleScreen = StyleSheet.create({
+  OrStyle: {
+    color: COLORS.LIGHT_GRAY,
+    alignSelf: 'center'
+  },
+  containerTextBot: {
+    flexDirection:'row', 
+    alignSelf:'center',
+    marginTop: 10
+  },
+  TextBot1: {
+    color: COLORS.GRAY, 
+    alignSelf: 'center', 
+    fontSize: 16
+  },
+  textBot2: {
+    textDecorationLine: "underline",
+    color: COLORS.BLUE,
+    fontSize: 16
+  }
 });

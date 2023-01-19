@@ -4,9 +4,10 @@ import InputPass from "../components/InputPass";
 import { Checkbox } from "react-native-paper";
 import ButtonTouch from "../components/Button";
 import Inputs from "../components/Inputs";
-import { signUpStyles, styleComponents } from "../theme/StyleSignUp";
+import { signUpStyles, styleComponents, StyleScreen} from "../theme/StyleSignUp";
 import { StyleCheck } from "../theme/StyleCheckBox";
 import { COLORS } from "../theme/colors";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -78,11 +79,16 @@ export default class SignUp extends Component {
 
           <View>
             <ButtonTouch text="Sign Up" state={false} />
+            <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch
               text="Sign Up with Google"
               state={false}
               googleSign="https://aws1.discourse-cdn.com/auth0/optimized/3X/8/a/8a06490f525c8f65d4260204bc3bc7b0e1fb0ba7_2_500x500.png"
             />
+          </View>
+          <View style={StyleScreen.containerTextBot}>
+            <Text style={StyleScreen.TextBot1}>Already have an account? </Text>
+            <Text style={StyleScreen.textBot2}>Login</Text>
           </View>
         </View>
       </View>
