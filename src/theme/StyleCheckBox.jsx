@@ -4,7 +4,7 @@ import { COLORS } from "./colors";
 export const StyleCheck = StyleSheet.create({
   container: {
     flexDirection: "row",
-    marginTop: 45,
+    marginTop: 40,
   },
   Textcheck: {
     marginTop: 6,
