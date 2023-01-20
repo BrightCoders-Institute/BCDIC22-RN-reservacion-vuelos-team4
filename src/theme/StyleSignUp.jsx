@@ -1,20 +1,24 @@
-import { StyleSheet } from "react-native";
-import { COLORS } from "./colors";
+import { StyleSheet } from 'react-native';
+import { COLORS } from './colors';
 
 export const signUpStyles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
+  },
+  container2: {
+    flex: 1,
+    marginTop: 50,
   },
 });
 
 export const styleComponents = StyleSheet.create({
   containerInput: {
-    marginTop: 10,
+    marginTop: 40,
   },
   StyleDescText: {
-    position: "absolute",
-    textAlign: "justify",
+    position: 'absolute',
+    textAlign: 'justify',
     fontSize: 12,
     color: COLORS.GRAY,
     marginTop: 345,
@@ -22,11 +26,17 @@ export const styleComponents = StyleSheet.create({
   StyleHeader: {
     fontSize: 30,
     color: COLORS.BLUE,
-    fontWeight: "700",
+    fontWeight: '700',
     marginBottom: 20,
   },
+  StyleHeader2: {
+    fontSize: 30,
+    color: COLORS.BLUE,
+    fontWeight: '700',
+    marginBottom: 50,
+  },
   StyleIcon: {
-    position: "absolute",
+    position: 'absolute',
     right: 10,
     marginTop: 9,
     fontSize: 25,
@@ -38,7 +48,7 @@ export const styleComponents = StyleSheet.create({
     height: 45,
     padding: 10,
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
     marginBottom: 10,
   },
   StyleInputChange: {
@@ -48,35 +58,35 @@ export const styleComponents = StyleSheet.create({
     height: 45,
     padding: 10,
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   StyleTextInput: {
     fontSize: 20,
     color: COLORS.BLACK_GRAY,
     marginTop: 10,
     marginBottom: 5,
-    fontWeight: "300",
+    fontWeight: '300',
   },
 });
 
 export const StyleScreen = StyleSheet.create({
   OrStyle: {
     color: COLORS.LIGHT_GRAY,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   containerTextBot: {
-    flexDirection:'row', 
-    alignSelf:'center',
-    marginTop: 10
+    flexDirection: 'row',
+    alignSelf: 'center',
+    marginTop: 10,
   },
   TextBot1: {
-    color: COLORS.GRAY, 
-    alignSelf: 'center', 
-    fontSize: 16
+    color: COLORS.GRAY,
+    alignSelf: 'center',
+    fontSize: 16,
   },
   textBot2: {
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
     color: COLORS.BLUE,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
