@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-web';
 import CardFlight from '../components/CardFlight';
+import FloatingButton from '../components/FloatingButton';
+import { StyleFloatingButton } from '../theme/StyleFloatingButton';
 
 export default class MyFlights extends Component {
   render() {
     return (
-      <View>
+      <View style={StyleFloatingButton.container}>
         <CardFlight
           data={{
             departure: {
@@ -21,6 +23,7 @@ export default class MyFlights extends Component {
             passengers: '2 passengers',
           }}
         />
+        <FloatingButton />
       </View>
     );
   }
