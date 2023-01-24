@@ -8,7 +8,9 @@ export const signUpStyles = StyleSheet.create({
   },
   container2: {
     flex: 1,
-    marginTop: 50,
+    marginTop: -20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -33,7 +35,7 @@ export const styleComponents = StyleSheet.create({
     fontSize: 30,
     color: COLORS.BLUE,
     fontWeight: '700',
-    marginBottom: 50,
+    marginBottom: 20,
   },
   StyleIcon: {
     position: 'absolute',

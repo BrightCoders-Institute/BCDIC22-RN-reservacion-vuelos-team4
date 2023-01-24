@@ -30,7 +30,12 @@ export default class Login extends Component {
           </View>
 
           <View>
-            <ButtonTouch text='Login' state={false} />
+            <ButtonTouch
+              text='Login'
+              state={false}
+              screenNav='MyFlights'
+              navegation={this.props.navigation}
+            />
             <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch
               text='Login with Google'
@@ -40,7 +45,14 @@ export default class Login extends Component {
           </View>
           <View style={StyleScreen.containerTextBot}>
             <Text style={StyleScreen.TextBot1}>Don't have an account? </Text>
-            <Text style={StyleScreen.textBot2}>Register</Text>
+            <Text
+              style={StyleScreen.textBot2}
+              onPress={() => {
+                this.props.navigation.navigate('SignUp');
+              }}
+            >
+              Register
+            </Text>
           </View>
         </View>
       </View>

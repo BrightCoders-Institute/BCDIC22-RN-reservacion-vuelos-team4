@@ -1,23 +1,11 @@
 import { StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import SignUp from './src/views/SignUp';
 import Login from './src/views/Login';
 import Constants from 'expo-constants';
 import MyFlights from './src/views/MyFlights';
+import Navigation from './src/navigation/index';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <MyFlights />
-    </View>
-  );
+  return <Navigation />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: Constants.statusBarHeight,
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
