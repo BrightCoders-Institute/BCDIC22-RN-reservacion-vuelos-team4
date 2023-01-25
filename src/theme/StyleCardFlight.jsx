@@ -1,4 +1,15 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+export const stylesContainer = StyleSheet.create({
+  container: {
+    marginTop: Constants.statusBarHeight,
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export const stylesCards = StyleSheet.create({
   containerCards: {
