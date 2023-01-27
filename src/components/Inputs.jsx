@@ -1,10 +1,21 @@
-import React, { Component } from "react";
-import { TextInput, Text, View, Button } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { styleComponents } from "../theme/StyleSignUp";
+import React, { Component } from 'react';
+import { TextInput } from 'react-native';
+import { styleComponents } from '../theme/StyleSignUp';
 
 export default class Inputs extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
-    return <TextInput style={styleComponents.StyleInput} />;
+    return (
+      <TextInput
+        onChangeText={(text) => {
+          this.props.onEmailChange(text);
+        }}
+        value={this.props.value}
+        style={styleComponents.StyleInput}
+      />
+    );
   }
 }
