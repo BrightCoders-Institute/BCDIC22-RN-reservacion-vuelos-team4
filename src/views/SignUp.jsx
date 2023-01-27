@@ -37,8 +37,8 @@ export default class SignUp extends Component {
 
   handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
-      .then((userCredential) => {
-        updateProfile(userCredential.user, {
+      .then(async (userCredential) => {
+        await updateProfile(userCredential.user, {
           displayName: this.state.firstName,
         });
         Alert.alert('Account created successfully');
