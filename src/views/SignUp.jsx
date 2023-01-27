@@ -1,22 +1,53 @@
-import { View, Text, Linking } from 'react-native';
+import { View, Text, Linking, Alert, TextInput } from 'react-native';
 import React, { Component } from 'react';
-import InputPass from '../components/InputPass';
 import { Checkbox } from 'react-native-paper';
 import ButtonTouch from '../components/Button';
 import Inputs from '../components/Inputs';
+import InputPass from '../components/InputPass';
 import { signUpStyles, styleComponents, StyleScreen } from '../theme/StyleSignUp';
 import { StyleCheck } from '../theme/StyleCheckBox';
 import { COLORS } from '../theme/colors';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { auth } from '../db/firebaseConfig';
 
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
+} from 'firebase/auth/react-native';
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checked: false,
       checked2: false,
+      firstName: '',
+      email: '',
+      password: '',
     };
+    this.changeEmail = this.changeEmail.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
+  changeEmail(text) {
+    this.setState({ ...this.props.state, email: text });
+  }
+  changePassword(text) {
+    this.setState({ ...this.props.state, password: text });
+  }
+
+  handleCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
+      .then(async (userCredential) => {
+        await updateProfile(userCredential.user, {
+          displayName: this.state.firstName,
+        });
+        Alert.alert('Account created successfully');
+        this.props.navigation.navigate('Login');
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
   render() {
     return (
       <View style={signUpStyles.container}>
@@ -24,11 +55,14 @@ export default class SignUp extends Component {
           <View style={styleComponents.containerInput}>
             <Text style={styleComponents.StyleHeader}>Sign Up</Text>
             <Text style={styleComponents.StyleTextInput}>First Name</Text>
-            <Inputs />
+            <TextInput
+              onChangeText={(text) => this.setState({ ...this.props.state, firstName: text })}
+              style={styleComponents.StyleInput}
+            />
             <Text style={styleComponents.StyleTextInput}>Email *</Text>
-            <Inputs />
+            <Inputs onEmailChange={this.changeEmail} value={this.state.email} />
             <Text style={styleComponents.StyleTextInput}>Password *</Text>
-            <InputPass />
+            <InputPass onPassChange={this.changePassword} value={this.state.pass} />
             <Text style={styleComponents.StyleDescText}>
               Use 8 or more characters with a mix of letters, numbers, and symbols
             </Text>
@@ -80,6 +114,9 @@ export default class SignUp extends Component {
               state={false}
               screenNav='Login'
               navegation={this.props.navigation}
+              onPress={() => {
+                this.handleCreateAccount();
+              }}
             />
             <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch

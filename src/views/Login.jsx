@@ -1,22 +1,48 @@
-import { View, Text, Linking } from 'react-native';
+import { View, Text } from 'react-native';
 import React, { Component } from 'react';
 import InputPass from '../components/InputPass';
-import { Checkbox } from 'react-native-paper';
 import ButtonTouch from '../components/Button';
 import Inputs from '../components/Inputs';
 import { signUpStyles, styleComponents, StyleScreen } from '../theme/StyleSignUp';
-import { StyleCheck } from '../theme/StyleCheckBox';
-import { COLORS } from '../theme/colors';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { auth } from '../db/firebaseConfig';
 
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from 'firebase/auth/react-native';
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checked: false,
       checked2: false,
+      email: '',
+      password: '',
     };
+    this.changeEmail = this.changeEmail.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
+
+  changeEmail(text) {
+    this.setState({ ...this.props.state, email: text });
+  }
+  changePassword(text) {
+    this.setState({ ...this.props.state, password: text });
+  }
+  handleSignIn = () => {
+    signInWithEmailAndPassword(auth, this.state.email, this.state.password)
+      .then((userCredential) => {
+        // Signed in
+        this.props.navigation.navigate('MyFlights');
+        // ...
+      })
+      .catch((error) => {
+        Alert.alert(error);
+        // ..
+      });
+  };
+
   render() {
     return (
       <View style={signUpStyles.container2}>
@@ -24,9 +50,9 @@ export default class Login extends Component {
           <View style={styleComponents.containerInput}>
             <Text style={styleComponents.StyleHeader2}>Login</Text>
             <Text style={styleComponents.StyleTextInput}>Email *</Text>
-            <Inputs />
+            <Inputs onEmailChange={this.changeEmail} value={this.state.email} />
             <Text style={styleComponents.StyleTextInput}>Password *</Text>
-            <InputPass />
+            <InputPass onPassChange={this.changePassword} value={this.state.pass} />
           </View>
 
           <View>
@@ -35,6 +61,9 @@ export default class Login extends Component {
               state={false}
               screenNav='MyFlights'
               navegation={this.props.navigation}
+              onPress={() => {
+                this.handleSignIn();
+              }}
             />
             <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch
