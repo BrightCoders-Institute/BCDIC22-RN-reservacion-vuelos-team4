@@ -10,7 +10,7 @@ export default class ButtonTouch extends Component {
     return (
       <TouchableOpacity
         style={this.props.state ? styleButton.container : styleButton.containerGray}
-        onPress={this.props.onPress}
+        onPress={this.props.onPress && this.props.state ? this.props.onPress : null}
       >
         <View style={styleButton.itemsAlign}>
           <Image source={{ uri: this.props.googleSign }} style={styleButton.imgStyle} />

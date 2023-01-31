@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { COLORS } from "./colors";
+import { StyleSheet } from 'react-native';
+import { COLORS } from './colors';
 
 export const styleButton = StyleSheet.create({
   container: {
@@ -8,8 +8,9 @@ export const styleButton = StyleSheet.create({
     backgroundColor: COLORS.BLUE,
     borderRadius: 10,
     marginTop: 20,
-    justifyContent: "center",
-    alignSelf: "center",
+    marginBottom: 25,
+    justifyContent: 'center',
+    alignSelf: 'center',
     shadowColor: COLORS.BLUE,
     shadowOffset: { width: 0, height: 11 },
     shadowOpacity: 0.4,
@@ -23,13 +24,13 @@ export const styleButton = StyleSheet.create({
     borderRadius: 10,
     marginTop: 20,
     marginBottom: 25,
-    justifyContent: "center",
-    alignSelf: "center",
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   itemsAlign: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignSelf: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   imgStyle: {
     width: 21,
@@ -37,10 +38,10 @@ export const styleButton = StyleSheet.create({
     marginRight: 40,
   },
   textStyle: {
-    color: "white",
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontWeight: "700",
+    color: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontWeight: '700',
     fontSize: 16,
     marginRight: 75,
   },
