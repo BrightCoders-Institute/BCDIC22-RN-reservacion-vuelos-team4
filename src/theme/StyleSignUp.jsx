@@ -69,6 +69,14 @@ export const styleComponents = StyleSheet.create({
     marginBottom: 5,
     fontWeight: '300',
   },
+  StyleTextInputError: {
+    fontSize: 14,
+    color: COLORS.RED,
+    marginTop: 14,
+    marginBottom: 5,
+    fontWeight: '300',
+    marginLeft: 3,
+  },
 });
 
 export const StyleScreen = StyleSheet.create({

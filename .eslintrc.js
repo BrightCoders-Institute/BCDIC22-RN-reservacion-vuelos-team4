@@ -3,14 +3,15 @@ module.exports = {
     browser: true,
     commonjs: true,
     es2021: true,
+    sourceType: 'module',
   },
-  extends: "standard",
-  overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 'latest',
+    parser: 'babel-eslint',
   },
   rules: {
-    semi: ["error", "never"],
-    indent: ["error", 2],
+    semi: ['error', 'always'],
+    indent: ['error', 2],
+    'comma-dangle': ['error', 'always-multiline'],
   },
 };

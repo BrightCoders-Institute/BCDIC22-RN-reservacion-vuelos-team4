@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import React, { Component } from 'react';
 import InputPass from '../components/InputPass';
 import ButtonTouch from '../components/Button';
@@ -30,6 +30,20 @@ export default class Login extends Component {
   changePassword(text) {
     this.setState({ ...this.props.state, password: text });
   }
+
+  changeEmail(text) {
+    const mail =
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    this.setState({ ...this.props.state, email: text }, () => {
+      if (this.state.email == '') {
+        this.setState({ ...this.props.state, showMailerror: false });
+      } else if (!this.state.email.match(mail)) {
+        this.setState({ ...this.props.state, showMailerror: true });
+      } else if (this.state.email.match(mail)) {
+        this.setState({ ...this.props.state, showMailerror: false });
+      }
+    });
+  }
   handleSignIn = () => {
     signInWithEmailAndPassword(auth, this.state.email, this.state.password)
       .then((userCredential) => {
@@ -38,7 +52,17 @@ export default class Login extends Component {
         // ...
       })
       .catch((error) => {
-        Alert.alert(error);
+        switch (error.code) {
+          case 'auth/user-not-found':
+            Alert.alert('Email not registered');
+            break;
+          case 'auth/wrong-password':
+            Alert.alert('Incorrect password');
+            break;
+          default:
+            Alert.alert(`Email or password invalid. Please review your data`);
+            break;
+        }
         // ..
       });
   };
@@ -49,27 +73,38 @@ export default class Login extends Component {
         <View>
           <View style={styleComponents.containerInput}>
             <Text style={styleComponents.StyleHeader2}>Login</Text>
-            <Text style={styleComponents.StyleTextInput}>Email *</Text>
-            <Inputs onEmailChange={this.changeEmail} value={this.state.email} />
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styleComponents.StyleTextInput}>Email *</Text>
+              {this.state.showMailerror && (
+                <Text style={styleComponents.StyleTextInputError}>
+                  Email in use or invalid. Use a different email
+                </Text>
+              )}
+            </View>
+
+            <Inputs onEmailChange={(text) => this.changeEmail(text)} value={this.state.email} />
             <Text style={styleComponents.StyleTextInput}>Password *</Text>
-            <InputPass onPassChange={this.changePassword} value={this.state.pass} />
+            <InputPass onPassChange={this.changePassword} value={this.state.password} />
           </View>
 
           <View>
             <ButtonTouch
               text='Login'
-              state={false}
+              state={this.state.email != '' && this.state.password != '' ? true : false}
               screenNav='MyFlights'
               navegation={this.props.navigation}
               onPress={() => {
-                this.handleSignIn();
+                if (this.state.email != null && this.state.password != null) {
+                  this.handleSignIn();
+                }
               }}
             />
+
             <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch
               text='Login with Google'
-              state={false}
-              googleSign='https://aws1.discourse-cdn.com/auth0/optimized/3X/8/a/8a06490f525c8f65d4260204bc3bc7b0e1fb0ba7_2_500x500.png'
+              state={true}
+              googleSign='https://freesvg.org/img/1534129544.png'
             />
           </View>
           <View style={StyleScreen.containerTextBot}>
@@ -78,6 +113,7 @@ export default class Login extends Component {
               style={StyleScreen.textBot2}
               onPress={() => {
                 this.props.navigation.navigate('SignUp');
+                this.setState({ ...this.props.state, email: '', password: '' });
               }}
             >
               Register

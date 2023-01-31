@@ -15,12 +15,15 @@ import {
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth/react-native';
+import { contains } from '@firebase/util';
 export default class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       checked: false,
       checked2: false,
+      showMailerror: false,
+      showPasserror: false,
       firstName: '',
       email: '',
       password: '',
@@ -29,10 +32,31 @@ export default class SignUp extends Component {
     this.changePassword = this.changePassword.bind(this);
   }
   changeEmail(text) {
-    this.setState({ ...this.props.state, email: text });
+    const mail =
+      /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    this.setState({ ...this.props.state, email: text }, () => {
+      if (this.state.email == '') {
+        this.setState({ ...this.props.state, showMailerror: false });
+      } else if (!this.state.email.match(mail)) {
+        this.setState({ ...this.props.state, showMailerror: true });
+      } else if (this.state.email.match(mail)) {
+        this.setState({ ...this.props.state, showMailerror: false });
+      }
+    });
   }
+
   changePassword(text) {
-    this.setState({ ...this.props.state, password: text });
+    const pass =
+      /^.*(?=.{8,120})(?!.*\s)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#/$%^&*()-_=+[\]\\{}:;"',<.>?]).*$/;
+    this.setState({ ...this.props.state, password: text }, () => {
+      if (this.state.password == '') {
+        this.setState({ ...this.props.state, showPasserror: false });
+      } else if (!this.state.password.match(pass)) {
+        this.setState({ ...this.props.state, showPasserror: true });
+      } else if (this.state.password.match(pass)) {
+        this.setState({ ...this.props.state, showPasserror: false });
+      }
+    });
   }
 
   handleCreateAccount = () => {
@@ -45,9 +69,17 @@ export default class SignUp extends Component {
         this.props.navigation.navigate('Login');
       })
       .catch((error) => {
-        alert(error);
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            Alert.alert('Email already in use');
+            break;
+          default:
+            Alert.alert(`Email or password invalid. Please review your data`);
+            break;
+        }
       });
   };
+
   render() {
     return (
       <View style={signUpStyles.container}>
@@ -59,9 +91,23 @@ export default class SignUp extends Component {
               onChangeText={(text) => this.setState({ ...this.props.state, firstName: text })}
               style={styleComponents.StyleInput}
             />
-            <Text style={styleComponents.StyleTextInput}>Email *</Text>
-            <Inputs onEmailChange={this.changeEmail} value={this.state.email} />
-            <Text style={styleComponents.StyleTextInput}>Password *</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styleComponents.StyleTextInput}>Email *</Text>
+              {this.state.showMailerror && (
+                <Text style={styleComponents.StyleTextInputError}>
+                  Email in use or invalid. Use a different email
+                </Text>
+              )}
+            </View>
+
+            <Inputs onEmailChange={(text) => this.changeEmail(text)} value={this.state.email} />
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={styleComponents.StyleTextInput}>Password *</Text>
+              {this.state.showPasserror && (
+                <Text style={styleComponents.StyleTextInputError}>Invalid or weak password</Text>
+              )}
+            </View>
+
             <InputPass onPassChange={this.changePassword} value={this.state.pass} />
             <Text style={styleComponents.StyleDescText}>
               Use 8 or more characters with a mix of letters, numbers, and symbols
@@ -111,25 +157,37 @@ export default class SignUp extends Component {
           <View>
             <ButtonTouch
               text='Sign Up'
-              state={false}
+              state={
+                this.state.email != '' && this.state.password != '' && this.state.checked
+                  ? true
+                  : false
+              }
               screenNav='Login'
               navegation={this.props.navigation}
               onPress={() => {
-                this.handleCreateAccount();
+                if (
+                  this.state.checked == true &&
+                  this.state.email != null &&
+                  this.state.password != null
+                )
+                  this.handleCreateAccount();
               }}
             />
             <Text style={StyleScreen.OrStyle}>or</Text>
             <ButtonTouch
               text='Sign Up with Google'
-              state={false}
-              googleSign='https://aws1.discourse-cdn.com/auth0/optimized/3X/8/a/8a06490f525c8f65d4260204bc3bc7b0e1fb0ba7_2_500x500.png'
+              state={true}
+              googleSign='https://freesvg.org/img/1534129544.png'
             />
           </View>
           <View style={StyleScreen.containerTextBot}>
             <Text style={StyleScreen.TextBot1}>Already have an account? </Text>
             <Text
               style={StyleScreen.textBot2}
-              onPress={() => this.props.navigation.navigate('Login')}
+              onPress={() => {
+                this.props.navigation.navigate('Login');
+                this.setState({ ...this.props.state, firstName: '', email: '', password: '' });
+              }}
             >
               Login
             </Text>
