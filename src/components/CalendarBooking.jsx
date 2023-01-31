@@ -63,6 +63,7 @@ export default class CalendarBooking extends Component {
           selectedDayBackgroundColor: COLORS.BLUE,
           selectedDayTextColor: COLORS.WHITE,
           textDayHeaderFontWeight: 'bold',
+          calendarBackground: COLORS.WHITE,
         }}
         minDate={moment().format('YYYY-MM-DD')}
         monthSize={10}
