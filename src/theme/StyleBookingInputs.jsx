@@ -1,24 +1,29 @@
-import { StyleSheet } from "react-native";
-import { COLORS } from "./colors";
+import { StyleSheet } from 'react-native';
+import { COLORS } from './colors';
 
 export const stylesObj = {
   textInput: {
     borderColor: COLORS.LIGHT_GRAY,
-    padding: 10,
-    width: 300,
+    width: 400,
     borderBottomWidth: 2,
-    fontSize: 20,
-    fontWeight: "500",
+    fontSize: 15,
+    fontWeight: '500',
+    marginBottom: 150,
+    marginTop: 120,
+    marginLeft: 95,
   },
 };
 export const styles = StyleSheet.create({
   ...stylesObj,
   focusedTextInput: {
     borderColor: COLORS.BLUE,
-    padding: 10,
-    width: 300,
+    marginRight: 50,
+    width: 400,
     borderBottomWidth: 2,
-    fontSize: 20,
-    fontWeight: "500",
+    fontSize: 15,
+    fontWeight: '500',
+    marginBottom: 150,
+    marginTop: 120,
+    marginLeft: 95,
   },
 });
