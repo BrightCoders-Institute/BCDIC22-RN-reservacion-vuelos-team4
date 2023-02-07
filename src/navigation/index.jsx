@@ -21,7 +21,7 @@ export default class Navigation extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName='Results'
+          initialRouteName='Login'
           screenOptions={{
             headerShown: false,
           }}

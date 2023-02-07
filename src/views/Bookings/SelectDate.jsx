@@ -1,7 +1,5 @@
 import { Text, View } from 'react-native';
 import React, { Component } from 'react';
-import Constants from 'expo-constants';
-import { stylesBooking } from '../../theme/StyleBooking';
 import ButtonTouch from '../../components/Button';
 import CardFlight from '../../components/CardFlight';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,21 +7,48 @@ import { COLORS } from '../../theme/colors';
 import CalendarBooking from '../../components/CalendarBooking';
 
 export default class SelectDate extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: '',
+      info: {
+        departure: {
+          country: '',
+          countryCode: '',
+        },
+        arrival: {
+          country: '',
+          countryCode: '',
+        },
+        date: '',
+      },
+    };
+  }
+  componentDidMount() {
+    const params = this.props.route.params.destination;
+    const data = this.props.route.params.data.departure;
+    const values = params.split(',');
+
+    this.setState((prevState) => {
+      let info = Object.assign({}, prevState.info);
+      info.arrival.country = values[1];
+      info.arrival.countryCode = values[0].substr(0, 3).toUpperCase();
+
+      //params data
+      info.departure.country = data.country;
+      info.departure.countryCode = data.countryCode;
+      return { info };
+    });
+  }
+
+  getDateFormat = (value) => {
+    this.setState({ ...this.state, date: value });
+  };
+
   render() {
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-        <CardFlight
-          data={{
-            departure: {
-              country: '',
-              countryCode: '',
-            },
-            arrival: {
-              country: '',
-              countryCode: '',
-            },
-          }}
-        />
+        <CardFlight data={this.state.info} />
         <MaterialIcons
           name='arrow-back-ios'
           color={COLORS.BLUE}
@@ -44,15 +69,18 @@ export default class SelectDate extends Component {
         </Text>
 
         <View style={{ top: 20 }}>
-          <CalendarBooking />
+          <CalendarBooking getDateFormat={(value) => this.getDateFormat(value)} />
         </View>
 
         <View style={{ top: 40 }}>
           <ButtonTouch
             text='Next'
-            state={false}
+            state={this.state.date != '' ? true : false}
             onPress={() => {
-              this.props.navigation.navigate('Passenger');
+              this.props.navigation.navigate('Passenger', {
+                data: this.state.info,
+                date: this.state.date,
+              });
             }}
           />
         </View>

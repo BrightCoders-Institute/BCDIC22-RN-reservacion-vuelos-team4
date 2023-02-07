@@ -1,13 +1,19 @@
-import { Text, View } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
 import React, { Component } from 'react';
-import Constants from 'expo-constants';
 import { stylesBooking } from '../../theme/StyleBooking';
-import BookinInputs from '../../components/BookingInputs';
 import ButtonTouch from '../../components/Button';
 import { MaterialIcons } from '@expo/vector-icons';
 import { COLORS } from '../../theme/colors';
+import { styles } from '../../theme/StyleBookingInputs';
 
 export default class From extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasFocus: false,
+      origin: '',
+    };
+  }
   render() {
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -18,17 +24,27 @@ export default class From extends Component {
           style={{ bottom: 100, right: 150 }}
         />
         <Text style={stylesBooking.StyleHeader}>Where are you{'\n'}now?</Text>
-        <BookinInputs />
+        <TextInput
+          onChangeText={(text) => this.setState({ ...this.props.state, origin: text })}
+          style={this.state.hasFocus ? styles.focusedTextInput : styles.textInput}
+          onFocus={this.setFocus.bind(this, true)}
+          onBlur={this.setFocus.bind(this, false)}
+          placeholder='Select Location'
+        />
+
         <View style={{ top: 100 }}>
           <ButtonTouch
             text='Next'
-            state={false}
+            state={this.state.origin != '' ? true : false}
             onPress={() => {
-              this.props.navigation.navigate('To');
+              this.props.navigation.navigate('To', { origin: this.state.origin });
             }}
           />
         </View>
       </View>
     );
+  }
+  setFocus(hasFocus) {
+    this.setState({ hasFocus });
   }
 }

@@ -7,7 +7,7 @@ import InputPass from '../components/InputPass';
 import { signUpStyles, styleComponents, StyleScreen } from '../theme/StyleSignUp';
 import { StyleCheck } from '../theme/StyleCheckBox';
 import { COLORS } from '../theme/colors';
-import { auth } from '../db/firebaseConfig';
+import { auth, newUser } from '../db/firebaseConfig';
 
 import {
   createUserWithEmailAndPassword,
@@ -62,9 +62,7 @@ export default class SignUp extends Component {
   handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, this.state.email, this.state.password)
       .then(async (userCredential) => {
-        await updateProfile(userCredential.user, {
-          displayName: this.state.firstName,
-        });
+        await newUser(userCredential.user.uid, this.state.firstName, this.state.email);
         Alert.alert('Account created successfully');
         this.props.navigation.navigate('Login');
       })

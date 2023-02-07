@@ -15,8 +15,7 @@ export default class WheelScrollPicker extends Component {
     return (
       <WheelPicker
         selectedIndicatorStyle={{
-          height: 2,
-          width: 300,
+          width: 100,
           alignContent: 'center',
           alignSelf: 'center',
           alignSelfContent: 'center',
@@ -31,8 +30,12 @@ export default class WheelScrollPicker extends Component {
         itemHeight={40}
         visibleRest={3}
         selectedIndex={this.state.selectedIndex}
-        options={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']}
-        onChange={(index) => this.setState({ ...this.props.state, selectedIndex: index })}
+        options={['', '1', '2', '3', '4', '5', '6', '7', '8']}
+        onChange={(index) => {
+          this.setState({ ...this.props.state, selectedIndex: index });
+          let passngr = `${index} passengers`;
+          this.props.getPassengersFormat(passngr);
+        }}
       />
     );
   }

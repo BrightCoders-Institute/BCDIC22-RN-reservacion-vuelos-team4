@@ -11,7 +11,6 @@ export default class CalendarBooking extends Component {
     super(props);
     this.state = {
       selectedDate: '',
-      markedDates: {},
     };
     LocaleConfig.locales['en'] = {
       monthNames: [
@@ -69,8 +68,9 @@ export default class CalendarBooking extends Component {
         monthSize={10}
         enableSwipeMonths={true}
         onDayPress={(day) => {
-          console.log('selected day', day);
+          let date = moment(day.dateString, 'Y/M/D').format('MMMM D, Y');
           this.setState({ selectedDate: day.dateString });
+          this.props.getDateFormat(date);
         }}
         renderArrow={(direction) => {
           if (direction === 'left') {
