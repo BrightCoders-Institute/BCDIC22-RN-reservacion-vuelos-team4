@@ -7,6 +7,9 @@ import { styleComponents } from '../theme/StyleSignUp';
 import { stylesContainer } from '../theme/StyleCardFlight';
 import { auth, db } from '../db/firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { COLORS } from '../theme/colors';
 
 export default class MyFlights extends Component {
   constructor(props) {
@@ -52,7 +55,24 @@ export default class MyFlights extends Component {
     return (
       <View style={stylesContainer.container}>
         <View style={StyleFloatingButton.container}>
-          <Text style={styleComponents.StyleHeader}>My flights</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styleComponents.StyleHeader}>My flights</Text>
+            <MaterialCommunityIcons
+              name='logout'
+              size={24}
+              color={COLORS.BLUE}
+              style={{
+                alignContent: 'flex-start',
+                marginLeft: 'auto',
+                marginTop: 9,
+              }}
+              onPress={() =>
+                signOut(auth).then(() => {
+                  this.props.navigation.navigate('Login');
+                })
+              }
+            />
+          </View>
           <FlatList
             data={this.state.info}
             keyExtractor={(item) => item.id}

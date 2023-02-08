@@ -49,6 +49,7 @@ export default class Login extends Component {
       .then((userCredential) => {
         // Signed in
         this.props.navigation.navigate('MyFlights');
+        this.setState({ ...this.props.state, email: '', password: '' });
         // ...
       })
       .catch((error) => {
