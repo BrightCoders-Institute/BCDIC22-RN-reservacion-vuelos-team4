@@ -57,6 +57,7 @@ export default class Passenger extends Component {
           color={COLORS.BLUE}
           size={26}
           style={{ bottom: 180, right: 150 }}
+          onPress={() => this.props.navigation.goBack()}
         />
         <Text
           style={{

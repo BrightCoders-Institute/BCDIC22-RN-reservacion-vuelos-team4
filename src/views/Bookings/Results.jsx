@@ -68,6 +68,7 @@ export default class Results extends Component {
           color={COLORS.BLUE}
           size={26}
           style={{ bottom: 325, right: 150 }}
+          onPress={() => this.props.navigation.goBack()}
         />
         <Text
           style={{

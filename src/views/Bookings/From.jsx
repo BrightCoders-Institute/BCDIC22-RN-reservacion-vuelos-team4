@@ -22,6 +22,7 @@ export default class From extends Component {
           color={COLORS.BLUE}
           size={26}
           style={{ bottom: 100, right: 150 }}
+          onPress={() => this.props.navigation.goBack()}
         />
         <Text style={stylesBooking.StyleHeader}>Where are you{'\n'}now?</Text>
         <TextInput
