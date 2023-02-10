@@ -10,6 +10,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS } from '../theme/colors';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default class MyFlights extends Component {
   constructor(props) {
@@ -66,11 +67,16 @@ export default class MyFlights extends Component {
                 marginLeft: 'auto',
                 marginTop: 9,
               }}
-              onPress={() =>
-                signOut(auth).then(() => {
+              onPress={() => {
+                if (auth.currentUser.providerData[0].providerId === 'google.com') {
+                  signOut(auth);
+                  GoogleSignin.revokeAccess();
                   this.props.navigation.navigate('Login');
-                })
-              }
+                } else {
+                  signOut(auth);
+                  this.props.navigation.navigate('Login');
+                }
+              }}
             />
           </View>
           <FlatList
