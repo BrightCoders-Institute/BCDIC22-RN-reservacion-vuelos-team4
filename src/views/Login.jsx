@@ -4,13 +4,17 @@ import InputPass from '../components/InputPass';
 import ButtonTouch from '../components/Button';
 import Inputs from '../components/Inputs';
 import { signUpStyles, styleComponents, StyleScreen } from '../theme/StyleSignUp';
-import { auth } from '../db/firebaseConfig';
+import 'expo-dev-client';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { auth, newUser } from '../db/firebaseConfig';
+import Constants from 'expo-constants';
 
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
+  signInWithCredential,
 } from 'firebase/auth/react-native';
+
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -22,6 +26,9 @@ export default class Login extends Component {
     };
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
+    GoogleSignin.configure({
+      webClientId: Constants.expoConfig?.extra?.googleServices.client[0].oauth_client[2].client_id,
+    });
   }
 
   changeEmail(text) {
@@ -44,6 +51,29 @@ export default class Login extends Component {
       }
     });
   }
+
+  onGoogleButtonPress = async () => {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    await GoogleSignin.signIn();
+    const { idToken, accessToken } = await GoogleSignin.getTokens();
+
+    // Create a Google credential with the token
+    const googleCredential = GoogleAuthProvider.credential(idToken, accessToken);
+
+    // Sign-in the user with the credential
+
+    signInWithCredential(auth, googleCredential)
+      .then((user) => {
+        newUser(auth.currentUser.uid, auth.currentUser.displayName, auth.currentUser.email);
+        this.props.navigation.navigate('MyFlights');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   handleSignIn = () => {
     signInWithEmailAndPassword(auth, this.state.email, this.state.password)
       .then((userCredential) => {
@@ -106,6 +136,9 @@ export default class Login extends Component {
               text='Login with Google'
               state={true}
               googleSign='https://freesvg.org/img/1534129544.png'
+              onPress={() => {
+                this.onGoogleButtonPress();
+              }}
             />
           </View>
           <View style={StyleScreen.containerTextBot}>

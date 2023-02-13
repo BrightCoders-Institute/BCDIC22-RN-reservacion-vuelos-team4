@@ -1,5 +1,7 @@
+const { ExpoConfig, ConfigContext } = require('expo/config');
 require('dotenv').config();
-module.exports = {
+module.exports = ({ config }) => ({
+  ...config,
   expo: {
     name: 'aplicacion-vuelos',
     slug: 'aplicacion-vuelos',
@@ -24,10 +26,18 @@ module.exports = {
         foregroundImage: './src/assets/adaptive-icon.png',
         backgroundColor: '#FFFFFF',
       },
+      package: 'com.brightcoders.aplicacion_vuelos',
+      versionCode: 1,
+      googleServicesFile: process.env.FIREBASE_GOOGLE_SERVICES_JSON,
     },
     web: {
       favicon: './src/assets/favicon.png',
     },
+    plugins: [
+      '@react-native-firebase/app',
+      '@react-native-firebase/auth',
+      '@react-native-google-signin/google-signin',
+    ],
     extra: {
       firebase: {
         apiKey: process.env.FIREBASE_API_KEY,
@@ -37,6 +47,12 @@ module.exports = {
         messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
         appId: process.env.FIREBASE_APP_ID,
       },
+      googleServices: process.env.FIREBASE_GOOGLE_SERVICES_DATA
+        ? JSON.parse(process.env.FIREBASE_GOOGLE_SERVICES_DATA)
+        : undefined,
+      eas: {
+        projectId: '41e77e7a-de05-4308-b645-f2c7d71c06ca',
+      },
     },
   },
-};
+});
